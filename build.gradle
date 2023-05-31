@@ -10,23 +10,21 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+//	maven { url "https://repository.openai.com/artifactory/libs-release-local" }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.projectlombok:lombok:1.18.20'
-	implementation 'org.projectlombok:lombok:1.18.20'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	//gralde 5.0 이하
+//	implementation 'org.projectlombok:lombok:1.18.20'
 
-	//Fabric SDK
-	implementation group: 'org.hyperledger.fabric-sdk-java', name: 'fabric-sdk-java', version: '2.2.2'
+	//gradle 5.0.이상
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 
-	//Object Pool
-	implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.11.1'
-
-	// Simple Json
-	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
-
+  implementation 'mysql:mysql-connector-java:8.0.32'
 	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
 	// 설정 파일 암호화
 	implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.4'
@@ -44,7 +42,46 @@ dependencies {
 	implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3'
+
+//	implementation group: 'org.bouncycastle', name: 'bcprov-ext-jdk15to18', version: '1.68'
+//  implementation 'org.bouncycastle:bcprov-jdk15on:1.68'
+
+	//Fabric SDK
+	implementation group: 'org.hyperledger.fabric-sdk-java', name: 'fabric-sdk-java', version: '2.2.19'
+
+	//Object Pool
+	implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.11.1'
+	// Simple Json
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '3.0.1'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.6.7'
+
+	// locale 설정
+	implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+
+	implementation "org.mapstruct:mapstruct:1.5.3.Final"
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
+
+	implementation group: 'com.google', name: 'bitcoinj', version: '0.11.3'
+	implementation group: 'org.threeten', name: 'threetenbp', version: '1.6.5'
+	implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '6.2'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.3'
+	implementation group: 'com.jcraft', name: 'jsch', version: '0.1.55'
+	// Gson
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+  // @NotEmpty
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+
+}
+dependencies {
+	implementation 'com.querydsl:querydsl-core'
+	implementation 'com.querydsl:querydsl-jpa'
+
+	annotationProcessor("com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa") // querydsl JPAAnnotationProcessor 사용 지정
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api") // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+	annotationProcessor("jakarta.annotation:jakarta.annotation-api") // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
 }
 
 tasks.named('test') {
