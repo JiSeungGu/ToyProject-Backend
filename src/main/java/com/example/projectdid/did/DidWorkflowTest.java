@@ -2,7 +2,7 @@ package com.example.projectdid.did;
 
 import com.example.projectdid.DidDocumentBase;
 import com.example.projectdid.RSA.CreateKeyPair;
-import com.example.projectdid.RSA.SejongRsaDid;
+import com.example.projectdid.RSA.RsaDid;
 import com.example.projectdid.proof.Ed25519PresentationProof;
 import com.example.projectdid.utils.Iso8601InstantTypeAdapter;
 import com.example.projectdid.vc.CredentialSubject;
@@ -50,7 +50,7 @@ public class DidWorkflowTest {
     }
     public static void RSAmain() throws Exception {
         KeyPair keyPair = rsaKey.genRSAKeyPair();
-        SejongRsaDid Rsadid = new SejongRsaDid("SEUNGGUDID",keyPair.getPublic(), keyPair.getPrivate());
+        RsaDid Rsadid = new RsaDid("SEUNGGUDID",keyPair.getPublic(), keyPair.getPrivate());
 
         System.out.println("RSA 공개키  :"+Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded()));
         System.out.println("RSA 개인키  :"+Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded()));
@@ -90,7 +90,7 @@ public class DidWorkflowTest {
         RSA DID    :443Jiqe3H9WbESyHJTAYxiudBH22YoeogzSH9gEfBkhv
         publicKeyBase58 : 2TuPVgMCHJy5atawrsADEzjP7MCVbyyCA89UW6Wvjp9HrAWSfRiyf4qPJsx3GaDW1UBq6f8cotpRZDJrD8aACCmpWRgXYMYjWYNAVrFS9eP71mgo1uRT9eoNL1jaac5nnBVtdLDQp1CZjm7FsoWAAXABhQkiDbB3dwcUtVUyW59UTsxM1XNuHfnk2kTRKSPUrbbABJBxuSviBv1K6CbZMrZoyoDSU8Dhqu7S1vR6PBzCfZMb3epDZBYvADKYvrqShbVS6t4e7EfdEYbVzQLo53BRaMs5VhtmgLiHc3XHfqJjWWztcu6S6Apkj1ZyN3ZwwwkDeVamfaKPmDhPm4CQs4KsrWsF4mqTjxJCtT7nEfJWAVXZEdP3ofeVvvN2df2AWreyDsHcstXmftuRGk
         */
-        vc.setIssuer("did:SEJONG_SCS:443Jiqe3H9WbESyHJTAYxiudBH22YoeogzSH9gEfBkhv");
+        vc.setIssuer("did:TOYPROJECT:443Jiqe3H9WbESyHJTAYxiudBH22YoeogzSH9gEfBkhv");
         Instant instant = Instant.now().plusSeconds(32400);
         vc.setIssuanceDate(instant);
         vc.setValidFrom(instant);
@@ -105,7 +105,7 @@ public class DidWorkflowTest {
 //        System.out.println("RSA 개인키  :"+Base64.getEncoder().encodeToString(RSAprKey.getEncoded()));
 
         //5. Ed25519CredentialProof
-        Ed25519CredentialProof proof = new Ed25519CredentialProof("did:SEJONG_MAINNET:443Jiqe3H9WbESyHJTAYxiudBH22YoeogzSH9gEfBkhv");
+        Ed25519CredentialProof proof = new Ed25519CredentialProof("did:TOYPROJECT:443Jiqe3H9WbESyHJTAYxiudBH22YoeogzSH9gEfBkhv");
 
         //toNormalizedJson 설명 :
 //        proof.sign(null,RSAprKey, vc.toNormalizedJson(true));
@@ -123,10 +123,10 @@ public class DidWorkflowTest {
     }
     public static void DidWorkflowTest() throws PrivateKey.BadKeyException, Exception {
         // DID:base58 -> byte -> hash -> publickey 순서인듯
-        PrivateKey privateKey = SejongDid.generateDidRootKey();
+        PrivateKey privateKey = Did.generateDidRootKey();
         System.out.println("공개키  :"+Base64.getEncoder().encodeToString(privateKey.getPublicKey().toBytes()));
         System.out.println("DID   :"+Base58.encode(Hashing.sha256().hashBytes(privateKey.getPublicKey().toBytes()).asBytes()));
-        SejongDid did = new SejongDid("SejongMainnet",privateKey.getPublicKey(),privateKey);
+        Did did = new Did("TOYPROJECT",privateKey.getPublicKey(),privateKey);
         DidDocumentBase doc = did.generateDidDocument();
 
         // 개인키 앞에 prefix로 붙은 이유는 무엇인지 ?
@@ -184,7 +184,7 @@ public class DidWorkflowTest {
         System.out.println("issuer의 공개키 :"+Base64.getEncoder().encodeToString(VCPrivateKey.getPublicKey().toBytes()));
 
         //5. Ed25519CredentialProof
-        Ed25519CredentialProof proof = new Ed25519CredentialProof("did:SEJONG_MAINNET:3PJAi2TLxTK9XG75U1a5k3b5K5YpkywoYYKFhucTLHFL");
+        Ed25519CredentialProof proof = new Ed25519CredentialProof("did:TOYPROJECT:3PJAi2TLxTK9XG75U1a5k3b5K5YpkywoYYKFhucTLHFL");
 
         //toNormalizedJson 설명 :
         proof.sign(VCPrivateKey,null, vc.toNormalizedJson(true));

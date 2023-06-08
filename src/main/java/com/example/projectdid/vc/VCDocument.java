@@ -21,13 +21,12 @@ import java.util.*;
 @Setter
 public class VCDocument extends  DidVerifiableCredentialBase<CredentialSubject>{
     public static final String CREDENTIAL_SCHEMA_TYPE = "JsonSchemaValidator2018";
-    private static final String DOCUMENT_TYPE = "SejongAccessCredential";
-    private static final String EXAMPLE_ID_PREFIX = "https://example.appnet.com/SejongAccess/";
+    private static final String DOCUMENT_TYPE = "AccessCredential";
+    private static final String EXAMPLE_ID_PREFIX = "https://example.appnet.com/Access/";
     private static final String JSON_PROPERTY_CREDENTIAL_SUBJECT = "credentialSubject";
     private static final String JSON_PROPERTY_PROOF = "proof";
     public static final String[] JSON_PROPERTIES_ORDER = {"@context", "id", "type", "credentialSchema",
             "credentialSubject", "issuer", "issuanceDate","expirationDate","validFrom","validUntil", "proof"};
-//    CredentialSchema는 Sejong DID에 들어가지 않음 주석.
 //    @Expose
 //    private CredentialSchema credentialSchema;
 

@@ -1,20 +1,14 @@
-package com.example.projectdid.RSA;
+package com.example.projectdid.did;
 
 import com.example.projectdid.DidDocumentBase;
-
-import com.example.projectdid.did.DidSyntax;
-import com.example.projectdid.did.SejongDidPubKey;
-
 import com.google.bitcoin.core.Base58;
 import com.google.common.hash.Hashing;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.math.ec.rfc8032.Ed25519;
 
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.Arrays;
 
-public class SejongRsaDid {
+public class Did {
 
     private String idString;
     private String did;
@@ -33,26 +27,35 @@ public class SejongRsaDid {
     public String toDid() {
         return toString();
     }
-    public SejongRsaDid(final String network,final PublicKey did,PrivateKey pri) {
+    public Did(final String network,final PublicKey did,PrivateKey pri) {
         this.didRootKey = did;
-        this.idString = SejongRsaDid.publicKeyToIdString(did);
+        this.idString = Did.publicKeyToIdString(did);
         this.did = buildDid();
         this.privateDidRootKey = pri;
 
     }
-
+    public static PrivateKey generateDidRootKey() {
+        byte[] data = new byte[Ed25519.SECRET_KEY_SIZE + 32];
+        ThreadLocalSecureRandom.current().nextBytes(data);
+        return derivableKey(data);
+    }
+    private static PrivateKey derivableKey(byte[] deriveData) {
+        var keyData = Arrays.copyOfRange(deriveData, 0, 32);
+        var chainCode = new KeyParameter(deriveData, 32, 32);
+        return new PrivateKey(keyData, chainCode);
+    }
     public DidDocumentBase generateDidDocument() {
         DidDocumentBase result = new DidDocumentBase(this.toDid());
 
         if (didRootKey != null) {
-            SejongDidRsaPubKey rootKey = SejongDidRsaPubKey.fromSejongIdentity(this, didRootKey);
-            result.setDidRSARootKey(rootKey);
+            DidPubKey rootKey = DidPubKey.fromIdentity(this, didRootKey);
+            result.setDidRootKey(rootKey);
         }
 
         return result;
     }
     public static String publicKeyToIdString(final PublicKey didRootKey) {
-        return Base58.encode(Hashing.sha256().hashBytes(didRootKey.getEncoded()).asBytes());
+        return Base58.encode(Hashing.sha256().hashBytes(didRootKey.toBytes()).asBytes());
     }
     public DidSyntax.Method getMethod() {
         return DidSyntax.Method.TOYPROJECT;

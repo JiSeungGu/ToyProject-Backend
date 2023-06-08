@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 /**
- * packageName   : net.sejongtelecom.demo.domain.holder.controller
  * fileName  : HolderController
  * author    : jiseung-gu
  * date  : 2023/01/19

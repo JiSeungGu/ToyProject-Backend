@@ -1,14 +1,11 @@
 package com.example.domain
 
-import kotlin.jvm.JvmStatic
-import com.jcraft.jsch.JSch
 import com.jcraft.jsch.ChannelSftp
-import com.jcraft.jsch.ChannelSftp.LsEntry
+import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,10 +20,10 @@ object SftpClient {
         val sftp: ChannelSftp
         try {
             //계정 정보
-            val id = "stoval"
-            val ip = "14.63.161.82"
-            val port = 22
-            val pw = "sejong!23$"
+          val id = "ID"
+          val ip = "IP"
+          val port = 22
+          val pw = "PASSWORD "
 
             //전일 날짜 구하기
             val calendar: Calendar = GregorianCalendar()

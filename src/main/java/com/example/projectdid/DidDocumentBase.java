@@ -1,8 +1,8 @@
 package com.example.projectdid;
 
-import com.example.projectdid.RSA.SejongDidRsaPubKey;
+import com.example.projectdid.RSA.DidRsaPubKey;
 import com.example.projectdid.did.DidSyntax;
-import com.example.projectdid.did.SejongDidPubKey;
+import com.example.projectdid.did.DidPubKey;
 import com.example.projectdid.utils.Iso8601InstantTypeAdapter;
 import com.google.gson.*;
 import com.google.gson.annotations.Expose;
@@ -21,11 +21,11 @@ public class DidDocumentBase {
     protected String id;
 
     @Expose(serialize = false, deserialize = false)
-    protected SejongDidPubKey SejongRootKey;
+    protected DidPubKey RootKey;
 
     //RSA로인한 추가
     @Expose(serialize = false, deserialize = false)
-    protected SejongDidRsaPubKey SejongRSARootKey;
+    protected DidRsaPubKey RSARootKey;
 
     public DidDocumentBase(final String did){
         this.id = did;
@@ -49,8 +49,8 @@ public class DidDocumentBase {
                     JsonObject publicKeyObj = itr.next().getAsJsonObject();
                     if (publicKeyObj.has(DidDocumentJsonProperties.ID)
                             && publicKeyObj.get(DidDocumentJsonProperties.ID).getAsString()
-                            .equals(result.getId() + SejongDidPubKey.DID_ROOT_KEY_NAME)) {
-                        result.setDidRootKey(gson.fromJson(publicKeyObj, SejongDidPubKey.class));
+                            .equals(result.getId() + DidPubKey.DID_ROOT_KEY_NAME)) {
+                        result.setDidRootKey(gson.fromJson(publicKeyObj, DidPubKey.class));
                         break;
                     }
                 }
@@ -104,7 +104,7 @@ public class DidDocumentBase {
 
         JsonElement authElement = rootObject.get(DidDocumentJsonProperties.AUTHENTICATION);
         if (authElement.isJsonArray() && authElement.getAsJsonArray().size() == 0) {
-            authElement.getAsJsonArray().add(SejongRSARootKey.getId());
+            authElement.getAsJsonArray().add(RSARootKey.getId());
         }
     }
     protected void addDidRsaRootKeyToPublicKeys(final JsonObject rootObject) {
@@ -119,7 +119,7 @@ public class DidDocumentBase {
         publicKeys.add(new GsonBuilder().disableHtmlEscaping()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(Instant.class, Iso8601InstantTypeAdapter.getInstance())
-                .create().toJsonTree(SejongRSARootKey));
+                .create().toJsonTree(RSARootKey));
     }
 
     private void addDidRootKeyToAuthentication(final JsonObject rootObject) {
@@ -129,7 +129,7 @@ public class DidDocumentBase {
 
         JsonElement authElement = rootObject.get(DidDocumentJsonProperties.AUTHENTICATION);
         if (authElement.isJsonArray() && authElement.getAsJsonArray().size() == 0) {
-            authElement.getAsJsonArray().add(SejongRootKey.getId());
+            authElement.getAsJsonArray().add(RootKey.getId());
         }
     }
 
@@ -150,7 +150,7 @@ public class DidDocumentBase {
         publicKeys.add(new GsonBuilder().disableHtmlEscaping()
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeAdapter(Instant.class, Iso8601InstantTypeAdapter.getInstance())
-                .create().toJsonTree(SejongRootKey));
+                .create().toJsonTree(RootKey));
     }
     public String getContext() {
         return context;
@@ -159,12 +159,12 @@ public class DidDocumentBase {
     public String getId() {
         return id;
     }
-    public void setDidRootKey(final SejongDidPubKey SejongRootKey) {
-        this.SejongRootKey = SejongRootKey;
+    public void setDidRootKey(final DidPubKey RootKey) {
+        this.RootKey = RootKey;
     }
 
     //RSA를 위한 추가
-    public void setDidRSARootKey(final SejongDidRsaPubKey SejongRootKey) {
-        this.SejongRSARootKey = SejongRootKey;
+    public void setDidRSARootKey(final DidRsaPubKey RootKey) {
+        this.RSARootKey = RootKey;
     }
 }

@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * packageName   : net.sejongtelecom.demo.domain.holder.controller
  * fileName  : HolderController
  * author    : jiseung-gu
  * date  : 2023/01/19

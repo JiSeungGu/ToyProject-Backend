@@ -2,7 +2,7 @@ package com.example.projectdid.proof;
 
 import com.example.projectdid.did.PrivateKey;
 import com.example.projectdid.did.PublicKey;
-import com.example.projectdid.did.SejongDidPubKey;
+import com.example.projectdid.did.DidPubKey;
 import com.example.projectdid.utils.Iso8601InstantTypeAdapter;
 import com.example.projectdid.vc.DidVerifiableCredentialJsonProperties;
 import com.example.projectdid.vc.VCDocument;
@@ -38,7 +38,7 @@ public class Ed25519PresentationProof extends VPproofBase {
         setType(PROOF_TYPE);
         setCreated(Instant.now());
         setProofPurpose(VP_PROOF_PURPOSE);
-        setVerifiableMethod(holderDid+ SejongDidPubKey.DID_ROOT_KEY_NAME);
+        setVerifiableMethod(holderDid+ DidPubKey.DID_ROOT_KEY_NAME);
         setChallenge(challenge);
         setDomain("No idear");
     }

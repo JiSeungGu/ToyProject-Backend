@@ -1,6 +1,6 @@
 package com.example.projectdid.vc;
 
-import com.example.projectdid.did.SejongDid;
+import com.example.projectdid.did.Did;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.common.collect.Lists;
@@ -60,12 +60,12 @@ public class DidVerifiableCredentialBase<T extends CredentialSubject> {
 
   }
 
-  // Hashgraph에서는 issuer클래스를 만들어서 issuer의 DID와 name을 넣을 수 있는 클래스를 만들었지만 SejongProject에서는 안넣을 예정이라 따로 클래스를 만들지 않음
+  // Hashgraph에서는 issuer클래스를 만들어서 issuer의 DID와 name을 넣을 수 있는 클래스를 만들었지만 Project에서는 안넣을 예정이라 따로 클래스를 만들지 않음
   public void setIssuer(final String issuerDid) {
     this.issuer = issuerDid;
   }
 
-  public void setIssuer(final SejongDid issuerDid) {
+  public void setIssuer(final Did issuerDid) {
     setIssuer(issuerDid.toDid());
   }
 

@@ -18,9 +18,9 @@ import java.util.UUID;
  **/
 public class VPDocument extends DidVerfiablePresentationBase{
     public static final String PRESENTATION_SIGNATURE_TYPE = "Ed25519VerificationKey2018";
-    private static final String DOCUMENT_TYPE_PV = "SejongAccessPresentation";
+    private static final String DOCUMENT_TYPE_PV = "AccessPresentation";
     private static final String PRESENTATION_PROOFPURPOSE = "authentication";
-    private static final String VP_EXAMPLE_ID_PREFIX = "https://example.appnet.com/SejongAccess/";
+    private static final String VP_EXAMPLE_ID_PREFIX = "https://example.appnet.com/Access/";
     public static final String[] JSON_PROPERTIES_ORDER = {"@context","id","type",
             "verifiableCredential","proof","credentialText","credentialSalt"};
     private static final String JSON_PROPERTY_PROOF = "proof";

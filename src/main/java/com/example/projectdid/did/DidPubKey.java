@@ -13,7 +13,7 @@ import lombok.Setter;
     인증 알고리즘 타입
  */
 @Setter
-public class SejongDidPubKey {
+public class DidPubKey {
     public static final String DID_ROOT_KEY_NAME = "#did-owner-key";
     public static final String DID_ROOT_KEY_TYPE = "Ed25519VerificationKey2018";
 
@@ -38,7 +38,7 @@ public class SejongDidPubKey {
         return id;
     }
 
-    public static SejongDidPubKey fromSejongIdentity(final SejongDid did, final PublicKey didRootKey) {
+    public static DidPubKey fromIdentity(final Did did, final PublicKey didRootKey) {
         if (did == null) {
             throw new IllegalArgumentException("DID cannot be null");
         }
@@ -48,15 +48,14 @@ public class SejongDidPubKey {
         }
 
         // Validate if hcsIdentity is derived from the given root key
-//        System.out.println("SejongDid.publicKeyToIdString(didRootKey) : "+SejongDid.publicKeyToIdString(didRootKey));
 //        System.out.println("did.getIdString()) :"+did.getIdString());
-        if (!SejongDid.publicKeyToIdString(didRootKey).equals(did.getIdString())) {
+        if (!Did.publicKeyToIdString(didRootKey).equals(did.getIdString())) {
             throw new IllegalArgumentException("The specified DID does not correspond to the given DID root key");
         }
 //        System.out.println("Base58.encode(didRootKey.toBytes()) :"+Base58.encode(didRootKey.toBytes()));
 //        System.out.println("didRootKey.toBytes() :"+didRootKey.toBytes());
 
-        SejongDidPubKey result = new SejongDidPubKey();
+        DidPubKey result = new DidPubKey();
         result.controller = did.toDid();
         System.out.println(result.getId());
         result.id = result.controller + DID_ROOT_KEY_NAME;

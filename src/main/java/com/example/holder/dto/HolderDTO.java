@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * packageName   : net.sejongtelecom.demo.domain.holder.dto
  * fileName  : HolderDTO
  * author    : jiseung-gu
  * date  : 2023/01/19

@@ -3,7 +3,7 @@ package com.example.projectdid.proof;
 import com.example.projectdid.RSA.CreateKeyPair;
 import com.example.projectdid.did.PrivateKey;
 import com.example.projectdid.did.PublicKey;
-import com.example.projectdid.did.SejongDidPubKey;
+import com.example.projectdid.did.DidPubKey;
 import com.example.projectdid.utils.Iso8601InstantTypeAdapter;
 import com.example.projectdid.vc.CredentialSubject;
 import com.example.projectdid.vc.DidVerifiableCredentialBase;
@@ -75,7 +75,7 @@ public class Ed25519CredentialProof extends proofBase{
     public Ed25519CredentialProof(final String issuerDid, final String domain, final String nonce) {
         setType(PROOF_TYPE);
         setProofPurpose(VC_PROOF_PURPOSE);
-        setVerificationMethod(issuerDid + SejongDidPubKey.DID_ROOT_KEY_NAME);
+        setVerificationMethod(issuerDid + DidPubKey.DID_ROOT_KEY_NAME);
         setCreator(issuerDid);
         setCreated(Instant.now());
         setDomain(domain);

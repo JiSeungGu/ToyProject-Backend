@@ -6,7 +6,7 @@ import com.example.entity.UserEntity;
 import com.example.issuer.dto.IssuerDTO;
 import com.example.projectdid.DidDocumentBase;
 import com.example.projectdid.did.PrivateKey;
-import com.example.projectdid.did.SejongDid;
+import com.example.projectdid.did.Did;
 import com.example.projectdid.proof.Ed25519CredentialProof;
 import com.example.projectdid.utils.Iso8601InstantTypeAdapter;
 import com.example.projectdid.vc.*;
