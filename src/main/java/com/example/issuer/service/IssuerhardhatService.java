@@ -28,9 +28,9 @@ import java.security.NoSuchAlgorithmException;
 @RequiredArgsConstructor
 public class IssuerhardhatService {
 
-  Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com:8545"));
+  Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com"));
   private final String contractAddress = "0x850EC3780CeDfdb116E38B009d0bf7a1ef1b8b38";
-  private final String NewcontractAddress = "0x1ACcBD355245AbA93CE46D33ab1D0152CE33Fd00";
+  private final String NewcontractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
   // privateKey를 사용하여 Credentials 객체 생성
   @Value("${contract.key}")
   private String privateKey;
@@ -39,6 +39,7 @@ public class IssuerhardhatService {
   //SOURCE_DESC VC hash값 가져오기
   public void setHashToContract(String holderDid,String vcHash) throws Exception {
     try {
+      System.out.println(privateKey);
       Credentials credentials = Credentials.create(privateKey);
 
       TransactionManager transactionManager = new RawTransactionManager(web3, credentials);

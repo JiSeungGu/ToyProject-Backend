@@ -1,3 +1,6 @@
+Deploying contracts with the account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+SmartContract deployed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+
 사용 기술 
 <li>
 openjdk 11, spring boot 2.2.6, gradle 6.3, web3j 4.5.11, aws sdk 1.11.819

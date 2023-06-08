@@ -28,7 +28,8 @@ public class jasypt {
 
         StringEncryptor encryptor =  stringEncryptor();
 
-        System.out.println("sejong!23$ : "+encryptor.encrypt("sejong!23$"));
+//        System.out.println("sejong!23$ : "+encryptor.encrypt("sejong!23$"));
+      System.out.println("sejong!23$ : "+encryptor.encrypt("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
         System.out.println("Decrypt Hi: "+encryptor.decrypt("TYXhnVlg3kRS7ksDFdCuayzBL8yqH1fxSeN3I+OQVYQ="));
     }
 }
