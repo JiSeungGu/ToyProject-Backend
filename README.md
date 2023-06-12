@@ -9,7 +9,7 @@ Cognito 로그인은 가능하지만, Backend 인증 및 DID만으로의 로그�
 업로드된 사진 및 파일은 S3에 저장되며 CDN을 통하여 사진을 불러 오게 되어 사용자에게 보여집니다.
 hardhat Node는 EC2 8545포트에서 작동 중이며, [http://www.fufuanfox.com](http://www.fufuanfox.com) 로 접근 시 로드밸런서에서 8545 포트로 redirect 설정을 했습니다. 같은 서버에서 작동 중인 Spring Boot는 HTTPS로 접근 시 redirect 설정되어 있습니다.
 
-웹페이지에서 회원가입 시 MetaMask를 이용하여 Transaction을 전송하며, 테스트 계정 로그인 시 1000 ETH가 지급됩니다.
+웹페이지에서 회원가입 시 MetaMask를 이용하여 Transaction을 전송하며, 테스트 계정 로그인 시 10000 ETH가 지급됩니다.
 
 ## 사용 스마트컨트랙트 주소
 Deploying contracts with the account: `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`<p>
@@ -41,7 +41,10 @@ SmartContract deployed to: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
 ## MetaMask 테스트용 계정
 - Account: `0x1CBd3b2770909D4e10f157cABC84C7264073C9Ec (10000 ETH)`
 - Private Key: `0x47c99abed3324a2707c28affff1267e45918ec8c3f20b8aa892e8b065d2942dd`
-
+## MetaMask Network 
+- RPC URL : `http://www.fufuanfox.com`
+- Chain ID : `31337`
+- 통화 기호 : `ETH`
 
 #### 이 프로젝트는 ToyProject이므로, 몇 개의 소스코드 파일 업로드를 제외하고 구현하였습니다.
 
@@ -50,4 +53,4 @@ SmartContract deployed to: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
 - JiSeungGu/ToyProject-hardhat(https://github.com/JiSeungGu/ToyProject-hardhat)
 - JiSeungGu/ToyProject-Front(https://github.com/JiSeungGu/ToyProject-Front) 
 
-Lambda, PinPoint, OpenSearch, DynamoDB, CloudWatch
+
