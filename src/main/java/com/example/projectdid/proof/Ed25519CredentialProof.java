@@ -157,8 +157,13 @@ public class Ed25519CredentialProof extends proofBase{
         //        byte[] inputForSigning = new byte[64];
         byte[] inputForSigning = inputForSigning(documentToSign,normalizedProof);
 
-        JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE)
-                .criticalParams(Collections.singleton("b64")).build();
+//        JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.EdDSA);
+      JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
+        .base64URLEncodePayload(false)
+        .criticalParams(Collections.singleton("b64"))
+        .build();
+//          .customParam("b64", Boolean.FALSE)
+//          .criticalParams(Collections.singleton("b64")).build();
         byte[] jwsSigningInput = getJwsSigningInput(jwsHeader, inputForSigning);
         if (signingKey==null) {
             System.out.println("signingKey==null");

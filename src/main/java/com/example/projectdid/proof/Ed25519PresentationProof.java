@@ -103,8 +103,12 @@ public class Ed25519PresentationProof extends VPproofBase {
         System.out.println("normalizedProof : "+normalizedProof);
         byte[] inputForSigning = inputForSigning(documentToSign.toString(),normalizedProof);
 
-        JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE)
-                .criticalParams(Collections.singleton("b64")).build();
+//        JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE)
+//                .criticalParams(Collections.singleton("b64")).build();
+      JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
+        .base64URLEncodePayload(false)
+        .criticalParams(Collections.singleton("b64"))
+        .build();
         byte[] jwsSigningInput = getJwsSigningInput(jwsHeader, inputForSigning);
 
         Base64URL signature = Base64URL.encode(signingKey.sign(jwsSigningInput));
@@ -156,8 +160,14 @@ public class Ed25519PresentationProof extends VPproofBase {
         System.out.println("map : "+ gson.toJson(map));
         // 전달 받은 VC문서를 Sign과 비교하기 위해서 만듬
         byte[] inputForSigning = inputForSigning(gson.toJson(map),halfOfVC.toString());
-        JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE)
-                .criticalParams(Collections.singleton("b64")).build();
+//        JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA).customParam("b64", Boolean.FALSE)
+//                .criticalParams(Collections.singleton("b64")).build();
+
+      JWSHeader jwsHeader = new JWSHeader.Builder(JWSAlgorithm.EdDSA)
+        .base64URLEncodePayload(false)
+        .criticalParams(Collections.singleton("b64"))
+        .build();
+
         byte[] jwsSigningInput = getJwsSigningInput(jwsHeader, inputForSigning);
 
         // 서명 비교

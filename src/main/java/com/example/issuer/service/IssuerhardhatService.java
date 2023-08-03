@@ -30,7 +30,7 @@ public class IssuerhardhatService {
 
   Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com"));
   private final String contractAddress = "0x850EC3780CeDfdb116E38B009d0bf7a1ef1b8b38";
-  private final String NewcontractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+  private final String NewcontractAddress = "0xC5888275e0a1ca13a26463318105957aa4d1feD7";
   // privateKey를 사용하여 Credentials 객체 생성
   @Value("${contract.key}")
   private String privateKey;

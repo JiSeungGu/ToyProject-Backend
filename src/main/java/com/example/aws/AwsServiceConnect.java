@@ -49,6 +49,7 @@ public class AwsServiceConnect {
 
 
   public static void main(String[] args) throws IOException, ParseException {
+    KMS_create_DataKEY();
     // * S3에 저장된 암호화된 private 가져오기 (byte형태로 가져오기 때문에 new String(...) 형태
     byte[] jsonStringData = GetAwsS3Data("0x0C94A0E9E4a5A3e2829389b1572b8176209670c1");
     System.out.println("jsonStringData :" + jsonStringData);
@@ -61,8 +62,8 @@ public class AwsServiceConnect {
     // * String형태를 byte형태로 만들어서 복호화
     byte[] bytes = StringToByte(jsonObject.get("ciphertext"));
 
-//        String temp2 = jsonObject.get("ETH").toString();
-//        encryptAndDecrypt_DecryptionSDK(temp.getBytes(StandardCharsets.UTF_8),"ETH",temp2);
+    // String temp2 = jsonObject.get("ETH").toString();
+    // encryptAndDecrypt_DecryptionSDK(temp.getBytes(StandardCharsets.UTF_8),"ETH",temp2);
     encryptAndDecrypt_DecryptionSDK(bytes, "ETH", "wallet");
   }
 
@@ -311,7 +312,7 @@ public static List<String> listFiles(String folderName) {
     s3.putObject("privateproject-s3", waddress + ".json", ResultJson.toString());
   }
 
-  public void KMS_create_DataKEY() {
+  public static void KMS_create_DataKEY() {
     GenerateDataKeyRequest dataKeyRequest = new GenerateDataKeyRequest();
     dataKeyRequest.setKeyId(KEY_ID);
     dataKeyRequest.setKeySpec(KEY_SPEC);

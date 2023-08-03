@@ -13,10 +13,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Service;
-import net.minidev.json.JSONObject;
+
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Map;
 
 /**
  * packageName   : com.example.auth.service
@@ -83,7 +84,7 @@ public class AuthService {
     log.info("claimsSet : {}", claimsSet.getClaims().get("email"));
     log.info("claimsSet : {}", claimsSet.getClaims().get("email_verified"));
   }
-  public JSONObject getIdTokenClaims(String idToken) throws ParseException {
+  public Map<String, Object> getIdTokenClaims(String idToken) throws ParseException {
     JWSObject jwsObject = JWSObject.parse(idToken);
     return jwsObject.getPayload().toJSONObject();
   }

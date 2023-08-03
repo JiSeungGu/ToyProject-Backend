@@ -39,7 +39,7 @@ public class RelayhardhatService {
 //  Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com:8545"));
   Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com"));
   private final String contractAddress = "0x850EC3780CeDfdb116E38B009d0bf7a1ef1b8b38";
-  private final String NewcontractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+  private final String NewcontractAddress = "0xC5888275e0a1ca13a26463318105957aa4d1feD7";
   @Value("${contract.key}")
   private String privateKey;
 
@@ -59,6 +59,7 @@ public class RelayhardhatService {
   //SOURCE_DESC VC hash값 가져오기
   public String getHashToContract(String holderDid) throws Exception {
     try{
+      System.out.println("privateKey"+privateKey);
       Credentials credentials = Credentials.create(privateKey);
 
       TransactionManager transactionManager = new RawTransactionManager(web3, credentials);
@@ -71,10 +72,10 @@ public class RelayhardhatService {
       );
       String hash = contract.getVcHash(holderDid).send();
 
-      log.info("setHashToContract Success");
+      log.info("getHashToContract Success");
       return hash;
     }catch (Exception e) {
-      log.info("setHashToContract Fail");
+      log.info("getHashToContract Fail"+e.getMessage());
       return null;
     }
 
@@ -82,6 +83,7 @@ public class RelayhardhatService {
     // 스마트 컨트랙트 자동 생성 클래스의 인스턴스 생성
   //SOURCE_DESC Document조회 후 Publickey 가져오기
   public String getPubFromContract(String holderdid) throws Exception {
+    System.out.println("privateKey"+privateKey);
 
     //MY_THOUGHTS  Credentials 객체를 사용하여 TransactionManager 객체 생성  객체 빈을 생성하자마자 전역변수로 넣어주고싶었지만 application.yaml파일에서 빈을 생성할때 privateKey를 전역변수로 값을 가져오면 null값을가져오게 됨
     Credentials credentials = Credentials.create(privateKey);

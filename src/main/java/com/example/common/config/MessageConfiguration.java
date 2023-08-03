@@ -42,10 +42,16 @@ public class MessageConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
       registry.addMapping("/**")
-        .allowedOrigins("http://localhost:3000")
-        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-        .allowedHeaders("*")
-        .allowCredentials(true);
+        .allowedOrigins("https://appleid.apple.com",
+          "https://accounts.google.com",
+          "http://localhost:8080",
+          "front.fufuanfox.com",
+          "https://front.fufuanfox.com",
+          "http://front.fufuanfox.com",
+          "http://localhost:3000")
+        .allowedMethods("*")
+        .allowedHeaders("*");
+
 
 //      registry.addMapping("/**")
 //        .allowedOrigins("http://we.fufuanfox.com:3000")

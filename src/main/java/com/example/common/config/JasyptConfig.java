@@ -1,6 +1,7 @@
 package com.example.common.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
@@ -33,11 +34,24 @@ public class JasyptConfig {
         config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
-        return encryptor;
+      /*
+      config.setPassword("hE+JoRLkL9uMo3siN71AckR8cNYV8qhbv9HUnUGxm6U=");
+      config.setStringOutputType("base64");
+      config.setKeyObtentionIterations(100);
+      config.setPoolSize("1");
+      config.setProvider(new BouncyCastleProvider());
+      config.setAlgorithm("PBEWITHMD5ANDDES");
+      config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+      config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
+      encryptor.setConfig(config);
+
+       */
+      return encryptor;
     }
 
   public static void main(String[] args) {
     StringEncryptor encryptor = new JasyptConfig().stringEncryptor();
-    System.out.println(encryptor.encrypt("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"));
+    System.out.println(encryptor.encrypt("Toy"));
+    System.out.println(encryptor.decrypt("lYAKu7JvLBnC/+LO7frZ/pwfIh2rE36Sa1lX0Lcoigk4xg29VEsV3Otpv7zU8lv/"));
   }
 }
