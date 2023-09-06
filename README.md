@@ -11,6 +11,13 @@ hardhat Node는 EC2 8545포트에서 작동 중이며, [http://www.fufuanfox.com
 
 웹페이지에서 회원가입 시 MetaMask를 이용하여 Transaction을 전송하며, 테스트 계정 로그인 시 10000 ETH가 지급됩니다.
 
+## +(추가) SNS 로그인 기능 개발,
+Kakao, Google, Apple 로그인 기능을 추가하였습니다.
+KaKao, goole , apple 로그인 시 사용할 수 있는 1회용 토큰을 발급받고 서버에 전달합니다. 서버는 해당 토큰을 각 플랫폼 (kakao,google,apple)에 통신하여 인증하고 해당 유저의
+정보를 받아옵니다. 이후 해당 유저의 정보를 이용하여 회원가입을 진행하게 됩니다. 처음 인증 후 server의 개인 토큰(toyproject용 토큰)을 jwt(ACCESSTOKEN, RERESH TOKEN)형태로 발급하게 되어 클라이언트가 리소스요청시 
+헤더에 jwt를 담아서 보내고 AWS api gateway에서는 이를 검증하게 됩니다. jwt발급시 사용한 PRIVATE, 검증시 사용한 PUBLIC Key는 AWS KMS 키를 연결해 사용하고 RSA4096방식을 이용했으며
+보안강화를 위해 유저정보와 RefreshToken을 키쌍으로 AWS REDIS에 저장하게 됩니다. 
+
 ## 사용 스마트컨트랙트 주소
 Deploying contracts with the account: `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`<p>
 SmartContract deployed to: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
