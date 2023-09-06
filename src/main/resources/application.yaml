@@ -21,6 +21,9 @@ logging:
       util:
         EC2MetadataUtils: error
 spring:
+  redis:
+    host: jwtrefreshtoken.7pxmxz.ng.0001.apn2.cache.amazonaws.com
+    port: 6379
   mvc:
     converters:
       preferred-json-mapper: gson
@@ -46,3 +49,4 @@ issuer:
 contract:
 #  key: ENC(brtRxwPkjXSUe3MkAxBqWhcg4oX00m1GoYFq8dWbDs7e12uXf2c8q4yIfyOcVyFsIi0Y6mIsYSOW+u9xQ9NGi4ceL6NBSaXLCTzcqHkgCNyJVPzRSaT2uFxh129eJu6SeQeLBtArNlTMqfe0pafNNA==)
   key: ENC(hZxxYbrgQADP1iadshRAAszsN+dzmggAuztgzoTHBQoraJj5E+O/eZMVXb1sdcHU17oRGfsFuBZT1PiCGKQq2a/ALpnaWo+JQvnCcUMebJWtxZl0tGlCOT+yUOjuIxTQ9M2Km1IpwCPp/gCzVsLuCA==)
+

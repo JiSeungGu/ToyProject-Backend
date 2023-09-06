@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /**
  * packageName   : com.example.OAuth2.dto
  * fileName  : GoogleIDModel
@@ -15,17 +17,29 @@ import lombok.Setter;
 @Setter
 public class GoogleIDModel {
 
-  @JsonProperty("credential")
-  public String crdential;
+  @JsonProperty("userID")
+  private String userID;
 
-  @JsonProperty("g_csrf_token")
-  public String g_csrf_token;
+  @JsonProperty("grantedScopes")
+  private List<String> grantedScopes;
+
+  @JsonProperty("accessToken")
+  private String accessToken;
+
+  @JsonProperty("refreshToken")
+  private String refreshToken;
+
+  @JsonProperty("idToken")
+  private String idToken;
 
   @Override
   public String toString() {
     return "GoogleIDModel{" +
-      "crdential='" + crdential + '\'' +
-      ", g_csrf_token='" + g_csrf_token + '\'' +
+      "userID='" + userID + '\'' +
+      ", grantedScopes=" + grantedScopes +
+      ", accessToken='" + accessToken + '\'' +
+      ", refreshToken='" + refreshToken + '\'' +
+      ", idToken='" + idToken + '\'' +
       '}';
   }
 }

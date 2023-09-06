@@ -36,7 +36,6 @@ public class ResponseService {
             return msg;
         }
     }
-
     // 단일건 결과를 처리하는 메소드
     public <T> SingleResult<T> getSingleResult(T data) {
         SingleResult<T> result = new SingleResult<>();
@@ -66,6 +65,16 @@ public class ResponseService {
         result.setMsg(msg);
         return result;
     }
+
+  // 실패 결과만 처리하는 메소드 - 시스템 에러인 경우만 사용할것!
+  public CommonResult getErrorResult(int code, String msg, String errorStatus) {
+    CommonResult result = new CommonResult();
+    //result.setSuccess(false);
+    result.setCode(code);
+    result.setMsg(msg);
+    return result;
+  }
+
 //
 //    public CommonResult getFailResult(int code) {
 //        CommonResult result = new CommonResult();

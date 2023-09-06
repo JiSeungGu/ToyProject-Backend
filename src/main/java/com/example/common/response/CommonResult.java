@@ -11,4 +11,5 @@ public class CommonResult {
 
     // 응답 메시지
     private String msg;
+
 }

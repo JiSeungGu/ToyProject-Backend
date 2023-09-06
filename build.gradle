@@ -84,6 +84,12 @@ dependencies {
   implementation group: 'com.google.api-client', name: 'google-api-client-jackson2', version: '1.30.10'
   implementation group: 'com.google.api-client', name: 'google-api-client', version: '2.2.0'
 
+  // Spring Data Redis
+  implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+// Lettuce client
+//  implementation 'io.lettuce.core:lettuce-core'
+  implementation group: 'io.lettuce', name: 'lettuce-core', version: '6.2.5.RELEASE'
+
 }
 dependencies {
 	implementation 'com.querydsl:querydsl-core'

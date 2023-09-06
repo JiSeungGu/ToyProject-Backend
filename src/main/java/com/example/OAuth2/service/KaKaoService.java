@@ -1,5 +1,7 @@
 package com.example.OAuth2.service;
 
+import com.example.exception.CustomException;
+import com.example.exception.ErrorCode;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 
 /**
  * packageName   : com.example.kakao
@@ -22,7 +25,7 @@ import java.net.*;
 public class KaKaoService {
   private static final String CLIENT_ID = "a661d0e07489c796acfad0346cf92321";
 //  private static final String REDIRECT_URI = "http://localhost:8080/v1/toy/kakao";
-  private static final String REDIRECT_URI = "https://front.fufuanfox.com/kakao";
+  private static final String REDIRECT_URI = "https://www.fufuanfox.com/v1/toy/kakao_web";
   private static final String KAKAO_OAUTH_URL = "https://kauth.kakao.com/oauth/authorize?client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&response_type=code";
   private static final String requestURL = "https://kauth.kakao.com/oauth/token";
   private static final String getTokenInfoURL = "https://kapi.kakao.com/v1/user/access_token_info";
@@ -77,9 +80,9 @@ public class KaKaoService {
     return accessToken;
   }
 
-  public String getTokenInfo(String token) {
+  public HashMap<String,Object> getTokenInfo(String token) {
+    HashMap<String, Object> data = new HashMap<>();
     try {
-
 
     URL url = new URL(getTokenInfoURL);
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -111,12 +114,14 @@ public class KaKaoService {
 
     System.out.println("response body : " + result);
 
-    return result.toString();
-    }catch(IOException e){
-      e.printStackTrace();
-    }
+    JsonElement element = JsonParser.parseString(result.toString());
 
-    return "error";
+    data.put("data",element.getAsJsonObject().get("id").getAsString());
+    return data;
+//    return result.toString();
+    }catch(IOException e){
+      throw new CustomException(ErrorCode.FAILED_TO_VALIDATE_KAKAO_LOGIN);
+    }
   }
 }
 
