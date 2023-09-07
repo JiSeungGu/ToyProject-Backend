@@ -2,21 +2,35 @@
 사용자에게 제공되는 웹페이지에서 개인폴더를 생성해 사진 및 파일을 업로드 다운로드 기능을 제공하는 서비스
 
 ## 상세기술
-React로 제공되는 웹페이지에서 사용자는 회원가입 시 DID를 발급받게 되며, DID Document는 EC2 (hardhat Node)에 저장됩니다.
-회원가입 정보는 AWS RDB에 저장되며, 비밀번호는 랜덤으로 생성된 Salt값을 사용합니다. 이때 해당 유저의 ID의 첫 글자를 가져와, ID+Salt값으로 새로운 Salt값을 생성하고, 이를 SHA256으로 해시합니다. 해시된 문자열 끝에는 ID를 제외한 salt가 추가로 붙어 저장됩니다.
-Cognito 로그인은 가능하지만, Backend 인증 및 DID만으로의 로그인은 아직 구현되지 않았습니다. 로그인 시 AWS S3에 새로운 폴더가 생성되어 사용자에게 보여집니다. 다른 사용자의 폴더도 볼 수 있지만, 폴더에 접근하여 다운로드 및 업로드를 하기 위해서는 인증이 필요합니다.
-사용자는 Holder의 역할을 하며, 웹페이지(Verifier)에게 관리자(Issuer)로부터 발급 받은 인증서(VC)를 Holder의 개인키를 이용하여 서명한 VP(Verifiable Presentation)를 제출하여 인증합니다. 인증 후 해당 사용자는 폴더에 접근하여 파일을 업로드 및 다운로드 할 수 있습니다.
-업로드된 사진 및 파일은 S3에 저장되며 CDN을 통하여 사진을 불러 오게 되어 사용자에게 보여집니다.
-hardhat Node는 EC2 8545포트에서 작동 중이며, [http://www.fufuanfox.com](http://www.fufuanfox.com) 로 접근 시 로드밸런서에서 8545 포트로 redirect 설정을 했습니다. 같은 서버에서 작동 중인 Spring Boot는 HTTPS로 접근 시 redirect 설정되어 있습니다.
-
-웹페이지에서 회원가입 시 MetaMask를 이용하여 Transaction을 전송하며, 테스트 계정 로그인 시 10000 ETH가 지급됩니다.
-
-## +(추가) SNS 로그인 기능 개발,
-Kakao, Google, Apple 로그인 기능을 추가하였습니다.
-KaKao, goole , apple 로그인 시 사용할 수 있는 1회용 토큰을 발급받고 서버에 전달합니다. 서버는 해당 토큰을 각 플랫폼 (kakao,google,apple)에 통신하여 인증하고 해당 유저의
-정보를 받아옵니다. 이후 해당 유저의 정보를 이용하여 회원가입을 진행하게 됩니다. 처음 인증 후 server의 개인 토큰(toyproject용 토큰)을 jwt(ACCESSTOKEN, RERESH TOKEN)형태로 발급하게 되어 클라이언트가 리소스요청시 
-헤더에 jwt를 담아서 보내고 AWS api gateway에서는 이를 검증하게 됩니다. jwt발급시 사용한 PRIVATE, 검증시 사용한 PUBLIC Key는 AWS KMS 키를 연결해 사용하고 RSA4096방식을 이용했으며
-보안강화를 위해 유저정보와 RefreshToken을 키쌍으로 AWS REDIS에 저장하게 됩니다. 
+상세 기술 스펙 및 구현
+#### Front-end:
+React: 사용자 인터페이스를 구축하고 사용자 경험을 향상시키는 프론트엔드 라이브러리.
+MetaMask: 사용자는 MetaMask를 통해 안전하게 트랜잭션을 발생시킬 수 있습니다. 테스트 계정에는 로그인 시 자동으로 10,000 ETH가 지급됩니다.
+#### Back-end:
+Spring Boot with HTTPS: 애플리케이션의 로직을 처리하고, HTTPS를 통한 안전한 데이터 전송을 지원합니다.
+Hardhat Node on EC2: Ethereum 블록체인 개발을 위해 EC2에서 8545 포트에서 동작합니다. 이는 로드 밸런서를 통해 http://www.fufuanfox.com에서 접근 가능합니다.
+#### 인증:
+DID (Decentralized Identifiers): 사용자는 회원 가입 시 DID를 발급받아서 EC2(Hardhat Node)에 저장됩니다.
+AWS Cognito: Cognito를 통해 로그인이 가능하며, 추후에는 Backend 인증 및 DID만으로도 로그인을 지원할 예정입니다.
+Verifiable Credentials and Presentations: 사용자는 발급 받은 인증서를 서명하여 신뢰성 있는 인증 절차를 거칩니다.
+#### 데이터 보안:
+Password Salting and Hashing: 비밀번호는 유니크한 Salt 값과 SHA-256을 사용해 해시되어 AWS RDS에 저장됩니다.
+AWS KMS for JWT: JWT 토큰 생성과 검증에 사용되는 키는 AWS KMS를 통해 관리됩니다. 키의 알고리즘은 RSA4096입니다.
+#### 데이터 저장:
+AWS RDS for User Info: 회원 정보는 AWS RDS에 안전하게 저장됩니다.
+AWS S3 for Files: 사용자는 인증 후 자신의 폴더에 파일을 업로드하거나 다운로드할 수 있습니다. 이는 CDN을 통해 빠르게 제공됩니다.
+AWS Content Delivery Network (CDN): 업로드된 파일과 이미지는 AWS S3에 저장되고, 이러한 리소스는 CDN을 통해 전달됩니다. CDN을 사용하면 사용자가 서버에 직접 접근하는 것보다 훨씬 빠르게 리소스를 불러올 수 있습니다.
+#### 캐시 전략:
+AWS Redis: 사용자 정보와 Refresh Token이 키-값 쌍으로 저장됩니다. TTL(Time To Live)은 Refresh Token의 만료 시간과 동기화되어, 토큰 만료 시 자동으로 캐시에서 제거되어 보안성이 향상됩니다.
+#### 로그:
+EC2 Logging: 메타마스크를 통한 트랜잭션 로그는 EC2에서 실시간으로 확인이 가능합니다.
+#### 추가 기능:
+SNS 로그인 (Kakao, Google, Apple): 각 플랫폼에서 1회용 토큰을 발급 받아 서버에서 인증합니다. 인증 후에는 JWT 형태로 개인 토큰을 발급받습니다.
+#### 인증과 토큰 관리:
+JWT (JSON Web Tokens): 사용자 인증을 위해 JWT를 사용합니다. Access Token과 Refresh Token의 두 가지 토큰을 발급해 관리합니다.
+Access Token: SNS 로그인 (Kakao, Google, Apple)에서 전달받은 userID를 키로 사용해 Payload에 포함하여 발급됩니다. 이 토큰은 사용자가 Resource 서버에 요청할 때 userID로 구분하여 처리됩니다.
+Refresh Token: 각 Device ID와 userID를 결합해 키로 사용합니다. 이 키와 Refresh Token의 값이 AWS Redis에 저장됩니다.
+Token Renewal: 사용자가 Refresh Token을 통해 Access Token을 재발급받을 경우, 사용자로부터 받은 Access Token에서 userID를 추출하고, 클라이언트의 Device ID를 함께 사용하여 Redis에서 Refresh Token을 검증합니다. 검증이 성공하면 새로운 Access Token을 발급합니다.
 
 ## 사용 스마트컨트랙트 주소
 Deploying contracts with the account: `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`<p>
@@ -35,15 +49,26 @@ SmartContract deployed to: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
 - web3j 4.5.11
 - aws sdk 1.11.819
 
-## 사용 기술
-- **AWS**: AWS KMS, Encryption SDK, S3, EC2, CloudFront, Route53(www.fufuanfox.com), VPC, LoadBalancer, IAM, InternetGateWay, Elastic IP, Certificate Manager(ssl), RDS, Notification Service(SNS), KMS, REDIS
-- **Node.js**: hardhat Node (EC2에서 동작 중), Using Web3j Eth (테스트)
+인증:
+- OAuth2.0
+- JWT(JSON Web Token)
+- AWS Cognito
 
-및 추가 테스트 용 기능:
+데이터 베이스:
+- MySQL
+- AWS RDS
+- Redis(캐시전략)
+## 사용 기술
+- **AWS**:
+- AWS KMS, Encryption SDK, S3, EC2, CloudFront, Route53, VPC, LoadBalancer, IAM, Internet Gateway, Elastic IP, Certificate Manager (SSL), Notification Service (SNS) 
+- **Node.js**: hardhat Node (EC2에서 동작 중)
+
+기타:
+- Git (버전 관리)
 - SFTP
-- DID
-- jasypt
-- Cognito
+- DID (디지털 아이덴티티)
+- Jasypt (보안)
+
 
 ## MetaMask 테스트용 계정
 - Account: `0x1CBd3b2770909D4e10f157cABC84C7264073C9Ec (10000 ETH)`
