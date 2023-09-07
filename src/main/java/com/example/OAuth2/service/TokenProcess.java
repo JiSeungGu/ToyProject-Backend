@@ -245,7 +245,7 @@ public class TokenProcess {
       () -> {
         //유저 정보 없음.
         throw new CustomException(ErrorCode.NOT_FOUND_USER);
-        //TODO 회원가입 & NICE인증
+        //MY_THOUGHTS : api v1/toy/nice에서 가입
       }
     );
   }
@@ -253,7 +253,7 @@ public class TokenProcess {
   public HashMap<String, Object> processByUserId(String userId, String DeviceId, String refreshToken) {
     HashMap<String, Object> result = new HashMap<>();
     String redisRefreshToken = redisService.getValue(userId + DeviceId);
-    if(redisRefreshToken == null ||redisRefreshToken.isEmpty()){
+    if (redisRefreshToken == null || redisRefreshToken.isEmpty()) {
       throw new CustomException(ErrorCode.DEVICE_IS_NOT_MATCHED);
 
     } else if (redisRefreshToken.equals(refreshToken)) {
@@ -272,8 +272,6 @@ public class TokenProcess {
   }
 
 
-
-
   public static void main(String[] args) throws Exception {
 
     String jws = Jwts.builder()
@@ -281,18 +279,18 @@ public class TokenProcess {
       .setIssuer("TOYPROJECT")
       .setSubject("jwtAccess")
       .claim("userID", "userId")
-      .claim("auth","auth")
+      .claim("auth", "auth")
 //    .claim("scope", "admins")
       //현재 시간
       .setIssuedAt(Date.from(Instant.now()))
       // 만료시간은 한달
-      .setExpiration(Date.from(Instant.now().plusSeconds(60*60*24)))
+      .setExpiration(Date.from(Instant.now().plusSeconds(60 * 60 * 24)))
 //    .setExpiration(Date.from(Instant.now().plusSeconds(60 * 60 * 24 * 30)))
       .compact();
 
-    System.out.println("jws :"+jws.substring(0,jws.length()-1));
-    String justPayload = jws.substring(0,jws.length()-1);
-    justPayload = justPayload.substring(justPayload.indexOf('.'),justPayload.length());
+    System.out.println("jws :" + jws.substring(0, jws.length() - 1));
+    String justPayload = jws.substring(0, jws.length() - 1);
+    justPayload = justPayload.substring(justPayload.indexOf('.'), justPayload.length());
     //SOURCE_DESC 헤더 생성
     // JWT 헤더 생성
     Map<String, Object> header = new HashMap<>();
@@ -306,8 +304,8 @@ public class TokenProcess {
 //    String encodedHeader = Base64.getUrlEncoder().withoutPadding().encodeToString(headerJson.getBytes(StandardCharsets.UTF_8));
     String encodedHeader = Base64.getEncoder().encodeToString(headerJson.getBytes(StandardCharsets.UTF_8));
     System.out.println(encodedHeader);
-    String headerpayload = encodedHeader+justPayload;
-    System.out.println("headerpayload :" +headerpayload);
+    String headerpayload = encodedHeader + justPayload;
+    System.out.println("headerpayload :" + headerpayload);
     ByteBuffer messageBuffer = ByteBuffer.wrap(headerpayload.getBytes(StandardCharsets.UTF_8));
 
     SignRequest signRequest = new SignRequest();
@@ -322,38 +320,38 @@ public class TokenProcess {
     String signature = Base64.getEncoder().encodeToString(signResult.getSignature().array());
     System.out.println("Signature: " + signature);
 
-   String token = headerpayload+"."+signature;
+    String token = headerpayload + "." + signature;
     System.out.println("jwt토큰 검증 ");
 //    System.out.println(encodedHeader+jws.substring(jws.indexOf('.'),jws.length())+signature);
 //    String token = encodedHeader+jws.substring(jws.indexOf('.'),jws.length())+signature;
-    System.out.println(jws+signature);
+    System.out.println(jws + signature);
 
 
-      GetPublicKeyRequest getPublicKeyRequest = new GetPublicKeyRequest();
-      getPublicKeyRequest.setKeyId(KEY_ID);
-      GetPublicKeyResult getPublicKeyResult = kmsClient.getPublicKey(getPublicKeyRequest);
-      ByteBuffer publicKey = getPublicKeyResult.getPublicKey();
-      byte[] publicKeyBytes = new byte[publicKey.remaining()];
-      publicKey.get(publicKeyBytes);
-      System.out.println("Public key: " + publicKey);
+    GetPublicKeyRequest getPublicKeyRequest = new GetPublicKeyRequest();
+    getPublicKeyRequest.setKeyId(KEY_ID);
+    GetPublicKeyResult getPublicKeyResult = kmsClient.getPublicKey(getPublicKeyRequest);
+    ByteBuffer publicKey = getPublicKeyResult.getPublicKey();
+    byte[] publicKeyBytes = new byte[publicKey.remaining()];
+    publicKey.get(publicKeyBytes);
+    System.out.println("Public key: " + publicKey);
 
-      // 공개키 객체를 생성합니다.
-      X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyBytes);
-      KeyFactory kf = KeyFactory.getInstance("RSA");
-      PublicKey pubkey = kf.generatePublic(spec);
+    // 공개키 객체를 생성합니다.
+    X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyBytes);
+    KeyFactory kf = KeyFactory.getInstance("RSA");
+    PublicKey pubkey = kf.generatePublic(spec);
 //      System.out.println("publickey :"+Base64.getUrlEncoder().withoutPadding().encodeToString(pubkey.getEncoded()));
 
-      System.out.println("token :"+token);
-      Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) pubkey, null); // Here we don't need a private key
-      JWTVerifier verifier = JWT.require(algorithm)
-        .withIssuer("TOYPROJECT")
-        .build();
-      try {
+    System.out.println("token :" + token);
+    Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) pubkey, null); // Here we don't need a private key
+    JWTVerifier verifier = JWT.require(algorithm)
+      .withIssuer("TOYPROJECT")
+      .build();
+    try {
       DecodedJWT decodedJWT = verifier.verify(token);
       System.out.println(decodedJWT.getPayload());
       System.out.println("Verification Success ");
       // 이후에는 추가적인 로직을 수행
-    } catch (JWTVerificationException e){
+    } catch (JWTVerificationException e) {
       // 검증에 실패하면 이 블럭이 실행됩니다.
       System.out.println("Verification failed: " + e.getMessage());
     }

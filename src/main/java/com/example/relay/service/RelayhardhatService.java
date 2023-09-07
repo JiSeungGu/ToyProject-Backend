@@ -38,8 +38,8 @@ public class RelayhardhatService {
 
 //  Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com:8545"));
   Web3j web3 = Web3j.build(new HttpService("http://www.fufuanfox.com"));
-  private final String contractAddress = "0x850EC3780CeDfdb116E38B009d0bf7a1ef1b8b38";
-  private final String NewcontractAddress = "0xC5888275e0a1ca13a26463318105957aa4d1feD7";
+  private final String NewcontractAddress = "0x850EC3780CeDfdb116E38B009d0bf7a1ef1b8b38";
+//  private final String NewcontractAddress = "0xC5888275e0a1ca13a26463318105957aa4d1feD7";
   @Value("${contract.key}")
   private String privateKey;
 

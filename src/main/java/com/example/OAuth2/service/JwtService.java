@@ -79,7 +79,7 @@ public class JwtService {
     String userId = paltForm.get("data").toString();
 
     //기존 platfrom 가입 이력 확인
-   tokenProcess.processByDeviceId(platForm, userId);
+    tokenProcess.processByDeviceId(platForm, userId);
 
     //AccessToken 발급
     String accessToken = tokenProcess.getToken(userId, 60 * 30, "AccessToken");
@@ -125,7 +125,7 @@ public class JwtService {
   }
 
   public String Nice(NiceDto niceDto) {
-    Map<String, BiConsumer<Long,String>> platformActions = new HashMap<>();
+    Map<String, BiConsumer<Long, String>> platformActions = new HashMap<>();
     platformActions.put("Kakao", jpaService::UpdateKakao);
     platformActions.put("Google", jpaService::UpdateGoogle);
     platformActions.put("Apple", jpaService::UpdateApple);
@@ -165,6 +165,7 @@ public class JwtService {
 
     return "Success";
   }
+
   public String verify(String token) throws Exception {
 
     PublicKey publicKey = tokenProcess.ConvertPubkey(GetPubKey());

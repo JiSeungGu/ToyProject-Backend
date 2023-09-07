@@ -36,7 +36,7 @@ SmartContract deployed to: `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`
 - aws sdk 1.11.819
 
 ## 사용 기술
-- **AWS**: AWS KMS, Encryption SDK, S3, EC2, CloudFront, Route53(www.fufuanfox.com), VPC, LoadBalancer, IAM, InternetGateWay, Elastic IP, Certificate Manager(ssl), RDS, Notification Service(SNS)
+- **AWS**: AWS KMS, Encryption SDK, S3, EC2, CloudFront, Route53(www.fufuanfox.com), VPC, LoadBalancer, IAM, InternetGateWay, Elastic IP, Certificate Manager(ssl), RDS, Notification Service(SNS), KMS, REDIS
 - **Node.js**: hardhat Node (EC2에서 동작 중), Using Web3j Eth (테스트)
 
 및 추가 테스트 용 기능:
