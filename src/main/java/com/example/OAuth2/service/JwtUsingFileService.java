@@ -47,10 +47,8 @@ public class JwtUsingFileService {
   private final ResponseService responseService;
   private final UserTableRepository userTableRepository;
 
-
-
   public CommonResult Verify(String token) throws Exception {
-//    Jws<Claims> jws;
+    //Jws<Claims> jws;
     // Load the public key
     byte[] keyBytes = Files.readAllBytes(Paths.get("public_key.pem"));
     PemReader pemReader = new PemReader(new StringReader(new String(keyBytes)));

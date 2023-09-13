@@ -27,11 +27,6 @@ public class LogOutService {
   private static final String ACCOUNT_DELETE = "account-delete";
 
   public CommonResult AppleLogout(String payload){
-//    log.info("AppleLogOut payload : {}", payload);
-//    byte[] decodedBytes = Base64.getUrlDecoder().decode(payload);
-//    String decodedPayload = new String(decodedBytes);
-//
-//    log.info("AppleLogOut decodedPayload : {}", decodedPayload);
     log.info("AppleLogOut payload : {}", payload);
     try {
       log.info("AppleLogOut referrer_type : {} " + JsonParser.parseString(payload).getAsJsonObject().get("events").getAsJsonObject().get("type").getAsString());

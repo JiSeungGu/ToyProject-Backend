@@ -36,5 +36,6 @@ public class ApiExceptionHandler {
   @ExceptionHandler(CustomException.class)
   public ResponseEntity<?> ResponseServiceException(CustomException e) {
     return ResponseEntity.status(e.getErrorCode().getStatus()).body(new ExceptionDto(e.getErrorCode()));
-  }}
+  }
+}
 

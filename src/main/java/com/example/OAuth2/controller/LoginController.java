@@ -75,8 +75,6 @@ public class LoginController {
 
     log.info("Received request body: {}", body);
     return responseService.getSingleResult(logOutService.AppleLogout(body));
-
-//    return responseService.getSingleResult(logOutService.AppleLogout(payload));
   }
 
   @PostMapping("/google-logout")
@@ -108,7 +106,6 @@ public class LoginController {
     return responseService.getSingleResult(jwtService.GetPubKey());
   }
 
-
   @GetMapping("/redisPost")
   public void redis(@RequestParam String key,
                     @RequestParam String value) throws Exception {
@@ -122,16 +119,6 @@ public class LoginController {
     log.info("key : {}", key);
     return responseService.getSingleResult(redisService.getValue(key));
   }
-
-
-//  @GetMapping("/kakao")
-//  public CommonResult kakaoLogin(@RequestParam("code") String code) {
-//    System.out.println("code = " + code);
-//    String accessToken = kaKaoService.getKakaoAccessToken(code);
-//    System.out.println("accessToken = " + accessToken);
-////    System.out.println(kaKaoService.getTokenInfo(accessToken));
-//    return responseService.getSingleResult(kaKaoService.getTokenInfo(accessToken));
-//  }
 
   @GetMapping("/kakao")
   public CommonResult kakaoLogin_app(@RequestParam("accessToken") String accessToken) {
@@ -163,19 +150,10 @@ public class LoginController {
     return responseService.getSingleResult("Ios");
   }
 
-  //
-//  @PostMapping("/ios3")
-//  public CommonResult iosLogin3(@RequestBody AppleIDModel model) throws Exception {
-//    System.out.println("CALL IOS");
-//    System.out.println(model.getAuthorizationCode());
-//    iosServiceV2.appleLogin(model.getAuthorizationCode());
-//    return responseService.getSingleResult("Ios");
-//  }
   @PostMapping("/appios")
   public CommonResult appIos(@RequestBody AppleIDModel model) throws Exception {
     System.out.println("CALL APPIOS");
     log.info(model.toString());
-//    iosAppService.userIdFromApple(model.getIdentityToken());
     return responseService.getSingleResult(iosAppService.userIdFromApple(model.getIdentityToken()));
   }
 
@@ -183,7 +161,6 @@ public class LoginController {
   public CommonResult google_app(@RequestBody String accessToken) throws IOException {
     System.out.println("CALL GOOGLE");
     System.out.println("accessToken :" + accessToken);
-//    System.out.println(googleIDModel.toString());
     return responseService.getSingleResult(googleService.requestUserInfo(accessToken));
   }
 
@@ -192,7 +169,6 @@ public class LoginController {
   public CommonResult google_app2(@RequestBody GoogleIDModel googleIDModel) throws IOException {
     System.out.println("CALL GOOGLE");
     System.out.println("accessToken :" + googleIDModel.getAccessToken());
-//    System.out.println(googleIDModel.toString());
     return responseService.getSingleResult(googleService.requestUserInfo(googleIDModel.getAccessToken()));
   }
 
@@ -205,5 +181,3 @@ public class LoginController {
     return responseService.getSingleResult(googleService.requestUserInfo_Web(credential));
   }
 }
-
-//    public CommonResult google(HttpServletRequest request, @RequestBody String body) {
