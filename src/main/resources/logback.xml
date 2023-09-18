@@ -18,9 +18,21 @@
   <!-- 에러 로그 설정 -->
   <appender name="ERROR_FILE" class="ch.qos.logback.core.FileAppender">
     <file>logs/application-error.log</file>
+<!--    <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--      <level>INFO</level>-->
+<!--      <onMatch>ACCEPT</onMatch> &lt;!&ndash; 해당 레벨만 기록한다. &ndash;&gt;-->
+<!--      <onMismatch>DENY</onMismatch> &lt;!&ndash; 다른 수준의 레벨은 기록하지 않는다.(상위 레벨도 기록 안함), 상위 수준의 레벨에 대한 기록을 원하면 ACCEPT 로 하면 기록된다. &ndash;&gt;-->
+<!--    </filter> &lt;!&ndash; 레벨별 필터링이 필요없을 경우 filter class 관련된 부분을 삭제하면 됨&ndash;&gt;-->
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
+<!--    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--      <fileNamePattern>./was-logs/info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern> &lt;!&ndash; 해당 패턴 네이밍으로 이전 파일이 기록됨 &ndash;&gt;-->
+<!--      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--        <maxFileSize>100MB</maxFileSize> &lt;!&ndash; 한 파일의 최대 용량 &ndash;&gt;-->
+<!--      </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--      <maxHistory>180</maxHistory> &lt;!&ndash; 한 파일의 최대 저장 기한 &ndash;&gt;-->
+<!--    </rollingPolicy>-->
   </appender>
 
   <!-- 로거 설정 -->
