@@ -1,4 +1,12 @@
 <configuration>
+  <appender name="Console"
+            class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>
+        %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+      </Pattern>
+    </layout>
+  </appender>
   <!-- 일반 로그 설정 -->
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>logs/application.log</file>
@@ -16,12 +24,14 @@
   </appender>
 
   <!-- 로거 설정 -->
-  <root level="info">
+  <root level="debug">
+    <appender-ref ref="Console" />
     <appender-ref ref="FILE"/>
   </root>
 
   <!-- 에러 로그만 따로 파일에 저장 -->
-  <logger name="com.yourpackage" level="error">
+  <logger name="ROOT" evel="error">
+    <appender-ref ref="Console" />
     <appender-ref ref="ERROR_FILE"/>
   </logger>
 </configuration>
