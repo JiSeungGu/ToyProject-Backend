@@ -153,7 +153,7 @@ public class HolderService {
   }
   public String determineMimeType(String fileName) {
     String mimeType = URLConnection.guessContentTypeFromName(fileName);
-    if (mimeType == null) {:
+    if (mimeType == null) {
       mimeType = "application/octet-stream";
     }
     return mimeType;
